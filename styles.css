@@ -20,6 +20,11 @@
     display: inline-block;
 }
 
+#rocket{
+    position:absolute;
+    text-align: left;
+}
+
 .center-block {
     text-align: center; 
     display: inline-block;
