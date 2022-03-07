@@ -1,66 +1,117 @@
 // Write your JavaScript code here.
 // Remember to pay attention to page loading!
 
-window.addEventListener("load", function () {
-  let takeoff = document.getElementById("takeoff");
-  let flightStatus = document.getElementById("flightStatus");
-  let shuttleBackground = document.getElementById("shuttleBackground");
-  let shuttleHeight = document.getElementById("spaceShuttleHeight");
-  let landing = document.getElementById("landing");
-  let missionAbort = document.getElementById("missionAbort");
-  let up = document.getElementById("up");
-  let down = document.getElementById("down");
-  let right = document.getElementById("right");
-  let left = document.getElementById("left");
-  let rocket = document.getElementById("rocket");
-  rocket.style.position = "relative";
+window.addEventListener('load',function(){
+    let takeOffBtn = document.getElementById("takeoff");
+    takeOffBtn.addEventListener("click",function(){
+       let isReady =   window.confirm("Confirm that the shuttle is ready for takeoff.");
 
-  takeoff.addEventListener("click", function () {
-    let response = window.confirm(
-      "Confirm that the shuttle is ready for takeoff."
-    );
-    if (response) {
-      flightStatus.innerHTML = "Shuttle in flight.";
-      shuttleBackground.style.backgroundColor = "blue";
-      shuttleHeight.innerHTML = Number(shuttleHeight.innerHTML) + 10000;
-    }
-  });
+       if(isReady){
 
-  landing.addEventListener("click", function () {
-    window.alert("The shuttle is landing. Landing gear engaged.");
-    flightStatus.innerHTML = "The shuttle has landed.";
-    shuttleBackground.style.backgroundColor = "green";
-    shuttleHeight.innerHTML = 0;
-  });
+        let flightStatus = document.getElementById("flightStatus");
+        flightStatus.innerText = "Shuttle in flight.";
 
-  missionAbort.addEventListener("click", function () {
-    let response = window.confirm(
-      "Confirm that you want to abort the mission."
-    );
-    if (response) {
-      flightStatus.innerHTML = "Mission aborted.";
-      shuttleBackground.style.backgroundColor = "red";
-      shuttleHeight.innerHTML = 0;
-    }
-  });
+         let shuttleFligh = document.getElementById("shuttleBackground");
+         shuttleFligh.setAttribute("style", "background-color: blue");
 
-  up.addEventListener("click", function () {
-    let position = rocket.style.top.slice(0, rocket.style.top.length - 2);
-    rocket.style.top = Number(position) - 10 + "px";
-  });
+         let shuttleHeight = document.getElementById("spaceShuttleHeight");
+         shuttleHeight.innerText = "10000";
+       }
+    });
 
-  down.addEventListener("click", function () {
-    let position = rocket.style.top.slice(0, rocket.style.top.length - 2);
-    rocket.style.top = Number(position) + 10 + "px";
-  });
+    let landingBtn = document.getElementById("landing");
+    landingBtn.addEventListener("click",function(){
+        window.alert("The shuttle is landing. Landing gear engaged.")
 
-  right.addEventListener("click", function () {
-    let position = rocket.style.left.slice(0, rocket.style.left.length - 2);
-    rocket.style.left = Number(position) + 10 + "px";
-  });
+        let flightStatus = document.getElementById("flightStatus");
+        flightStatus.innerText = "The shuttle has landed.";
 
-  left.addEventListener("click", function () {
-    let position = rocket.style.left.slice(0, rocket.style.left.length - 2);
-    rocket.style.left = Number(position) - 10 + "px";
-  });
-});
+        let shuttleFligh = document.getElementById("shuttleBackground");
+        shuttleFligh.setAttribute("style", "background-color: green");
+
+
+        let shuttleHeight = document.getElementById("spaceShuttleHeight");
+        shuttleHeight.innerText = "0";
+    });
+
+
+    let missionAbortBtn = document.getElementById("missionAbort");
+     missionAbortBtn.addEventListener("click", function () {
+       window.alert("Confirm that you want to abort the mission.");
+
+       let flightStatus = document.getElementById("flightStatus");
+       flightStatus.innerText = "Mission aborted.";
+
+       let shuttleFligh = document.getElementById("shuttleBackground");
+       shuttleFligh.setAttribute("style", "background-color: green");
+
+       let shuttleHeight = document.getElementById("spaceShuttleHeight");
+       shuttleHeight.innerText = "0";
+     });
+
+
+     let top = 0;
+     let down = 0;
+     let left = 0;
+     let right = 0;
+
+     let upBtn = document.getElementById("up");
+     upBtn.addEventListener("click",function(){
+     let shuttleHeight = document.getElementById("spaceShuttleHeight");  
+     let shuttleHeightAmount = Number(shuttleHeight.innerText); 
+     shuttleHeightAmount+=10000
+     shuttleHeight.innerText = shuttleHeightAmount;
+
+     top-= 10;
+     if( top < 0){
+         top = 0
+     }
+     document.getElementById("rocket").style.top = (top-10) + "px"
+
+
+     });
+
+
+
+      let downBtn = document.getElementById("down");
+      downBtn.addEventListener("click", function () {
+        let shuttleHeight = document.getElementById("spaceShuttleHeight");
+        let shuttleHeightAmount = Number(shuttleHeight.innerText);
+        shuttleHeightAmount -= 10000;
+        shuttleHeight.innerText = shuttleHeightAmount;
+
+        let heightOfBox = shuttleBackground.offsetHeight -75;
+        if(heightOfBox < top){
+            top = heightOfBox;
+        }
+
+         top += 10;
+         document.getElementById("rocket").style.top = (top - 10) + "px";
+      });
+
+
+
+      let leftBtn = document.getElementById("left");
+      leftBtn.addEventListener("click", function () {
+        left -= 10;
+        if(left < 10){
+            left = 0;
+        }
+        document.getElementById("rocket").style.left = (left - 10) + "px";
+      });
+
+       let rightBtn = document.getElementById("right");
+       rightBtn.addEventListener("click", function () {
+        left += 10;
+
+          let widthOfOfBox = shuttleBackground.offsetWidth - 75;
+          if (widthOfOfBox < left) {
+            top = widthOfOfBox;
+          }
+
+         
+         document.getElementById("rocket").style.left = (left - 10) + "px";
+       });
+
+
+})
